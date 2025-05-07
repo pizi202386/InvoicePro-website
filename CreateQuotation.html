@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quotation | InvoicePro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-y: auto;
+    }
+
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+
+      html, body {
+        height: auto !important;
+        overflow: visible !important;
+        margin: 0;
+        padding: 0;
+        background: white !important;
+      }
+
+      #quotationArea {
+        box-shadow: none !important;
+        page-break-inside: avoid !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 p-6">
+
+  <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8" id="quotationArea">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-blue-700">InvoicePro</h1>
+        <p class="text-sm text-gray-500">Modern Quotation Generator</p>
+      </div>
+      <div>
+        <input type="file" id="logoUpload" class="no-print mb-2">
+        <img id="logoPreview" class="h-16 hidden" alt="Your Logo" />
+      </div>
+    </div>
+
+    <!-- Quotation Info -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div>
+        <label class="font-semibold">Company Name</label>
+        <input type="text" id="companyName" class="w-full border p-2 rounded" placeholder="Your Company Name">
+      </div>
+      <div>
+        <label class="font-semibold">Customer Name</label>
+        <input type="text" id="customerName" class="w-full border p-2 rounded" placeholder="Customer Name">
+      </div>
+    </div>
+
+    <!-- Items Table -->
+    <div class="overflow-x-auto mb-4">
+      <table class="w-full text-left border">
+        <thead class="bg-blue-100">
+          <tr>
+            <th class="p-2 border">Item</th>
+            <th class="p-2 border">Qty</th>
+            <th class="p-2 border">Rate</th>
+            <th class="p-2 border">Amount</th>
+          </tr>
+        </thead>
+        <tbody id="itemsTable">
+          <tr>
+            <td class="p-2 border"><input type="text" class="w-full itemName border p-1 rounded" placeholder="Item Name"></td>
+            <td class="p-2 border"><input type="number" class="w-full itemQty border p-1 rounded" value="1" oninput="calculateTotal()"></td>
+            <td class="p-2 border"><input type="number" class="w-full itemRate border p-1 rounded" value="0" oninput="calculateTotal()"></td>
+            <td class="p-2 border amount">0</td>
+          </tr>
+        </tbody>
+      </table>
+      <button onclick="addItemRow()" class="mt-3 bg-green-500 text-white px-4 py-1 rounded no-print">+ Add Item</button>
+    </div>
+
+    <!-- Total -->
+    <div class="text-right text-xl font-semibold mb-6">
+      Total: PKR <span id="totalAmount">0</span>
+    </div>
+
+    <!-- Notes -->
+    <div class="mb-6">
+      <label class="font-semibold">Additional Notes</label>
+      <textarea class="w-full border p-2 rounded" rows="3" placeholder="Any comments or terms..."></textarea>
+    </div>
+
+    <!-- Print & Download -->
+    <div class="text-center no-print">
+      <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded mr-4">Print</button>
+      <button onclick="window.print()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded">Download PDF</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    function addItemRow() {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td class="p-2 border"><input type="text" class="w-full itemName border p-1 rounded" placeholder="Item Name"></td>
+        <td class="p-2 border"><input type="number" class="w-full itemQty border p-1 rounded" value="1" oninput="calculateTotal()"></td>
+        <td class="p-2 border"><input type="number" class="w-full itemRate border p-1 rounded" value="0" oninput="calculateTotal()"></td>
+        <td class="p-2 border amount">0</td>
+      `;
+      document.getElementById('itemsTable').appendChild(row);
+    }
+
+    function calculateTotal() {
+      let total = 0;
+      const rows = document.querySelectorAll('#itemsTable tr');
+      rows.forEach(row => {
+        const qty = row.querySelector('.itemQty').value || 0;
+        const rate = row.querySelector('.itemRate').value || 0;
+        const amount = qty * rate;
+        row.querySelector('.amount').innerText = amount;
+        total += amount;
+      });
+      document.getElementById('totalAmount').innerText = total;
+    }
+
+    document.getElementById('logoUpload').addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const logo = document.getElementById('logoPreview');
+          logo.src = e.target.result;
+          logo.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+
+</body>
+
+<script>
+  window.onload = function () {
+    // Check if the user is signed up
+    if (localStorage.getItem('isSignedUp') === 'true') {
+      // User is signed up, show the quotation form
+      document.getElementById('quoteContent').style.display = 'block';
+      document.getElementById('signUpLink').style.display = 'none';
+
+      // Show the user's name
+      const userName = localStorage.getItem('userName');
+      document.getElementById('userName').innerText = userName;
+    } else {
+      // User is not signed up, show the sign-up link
+      document.getElementById('quoteContent').style.display = 'none';
+      document.getElementById('signUpLink').style.display = 'block';
+    }
+  };
+</script>
+
+</html>

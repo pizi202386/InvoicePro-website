@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InvoicePro - Features</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+
+  <!-- Navbar with background image and text overlay -->
+  <nav class="bg-cover bg-center text-white" style="background-image: url('../images/background.jpg');background-size: 170%;">
+    <div class="bg-black bg-opacity-60 py-6 px-6 md:px-12 text-center">
+      <h1 class="text-4xl font-bold">All-in-One Features</h1>
+      <p class="text-md mt-2">Empowering small businesses with everything needed to create, manage, and send invoices</p>
+    </div>
+  </nav>
+  </br>
+  </br>
+
+  <!-- Seamless Infinite Image Slider -->
+  <div class="relative overflow-hidden border-b border-gray-200 bg-white">
+    <!-- First loop -->
+    <div class="flex w-max animate-marquee space-x-4">
+      <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\create-professional-invoice-2x.webp" class="slider-image" alt="Image 1">
+      <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\agencies-2x.webp" class="slider-image" alt="Image 2">
+      <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\ChatGPT Image Apr 24, 2025, 04_52_56 AM.png" class="slider-image" alt="Image 3">
+      <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\ChatGPT Image Apr 24, 2025, 05_29_57 AM.png" class="slider-image" alt="Image 4">
+    </div>
+    <!-- Duplicate loop to follow immediately -->
+    <div class="flex w-max animate-marquee space-x-4 absolute top-0 left-full">
+      <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\create-professional-invoice-2x.webp" class="slider-image" alt="Image 1 Duplicate">
+      <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\agencies-2x.webp" class="slider-image" alt="Image 2 Duplicate">
+      <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\ChatGPT Image Apr 24, 2025, 05_17_12 AM.png" class="slider-image" alt="Image 3 Duplicate">
+      <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\ChatGPT Image Apr 24, 2025, 05_29_57 AM.png" class="slider-image" alt="Image 4 Duplicate">
+    </div>
+  </div>
+
+  <!-- Animation Style -->
+  <style>
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .animate-marquee {
+      animation: marquee 30s linear infinite;
+    }
+
+    .slider-image {
+      height: 370px; /* Increased height for a significantly larger image */
+      width: 150; /* Maintain aspect ratio */
+      object-fit: cover; /* Ensures the image covers the container */
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional for shadow effect */
+    }
+  </style>
+
+  <!-- Feature Grid -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-10">
+        <!-- Feature Box 1: Quick Invoice Creation -->
+        <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
+          <a href="C:\Users\LENOVO\Desktop\Invoices and quotation\html\Quickinvoice.html" class="block"> 
+            <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\bd2867b65667762c0a42e8359e9b5f51.jpg" class="w-full h-64 mb-4 transition-transform duration-300 transform hover:scale-110">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Quick Invoice Creation</h3>
+            <p class="text-gray-600">Generate professional invoices in minutes with your logo, terms, and custom fields.</p>
+          </a>
+        </div>
+
+        <!-- Feature Box 2: Real-Time Tracking -->
+        <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
+          <a href="file:///C:/Users/LENOVO/Desktop/Invoices%20and%20quotation/html/RealTRACKING.html" class="block"> 
+            <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\Blue and Red Geometric Graphic Design Invoice.jpg" alt="Real-Time Tracking" class="w-full h-64 mb-4 transition-transform duration-300 transform hover:scale-110">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Real-Time Tracking</h3>
+            <p class="text-gray-600">Track invoice status, due dates, and client payments with smart reminders.</p>
+          </a>
+        </div>
+
+        <!-- Feature Box 3: Online Payment Options -->
+        <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
+          <a href="file:///C:/Users/LENOVO/Desktop/Invoices%20and%20quotation/html/Onlinepayment.html" class="block"> 
+            <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\1c1d19efac39ca75f1018b1f8c59fd0f.jpg" alt="Online Payment Options" class="w-full h-64 mb-4 transition-transform duration-300 transform hover:scale-110">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Online Payment Options</h3>
+            <p class="text-gray-600">Accept payments via card, bank, or wallet integrations with ease.</p>
+          </a>
+        </div>
+
+        <!-- Feature Box 4: Client Management -->
+        <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
+          <a href="file:///C:/Users/LENOVO/Desktop/Invoices%20and%20quotation/html/CleintMangment.html" class="block"> 
+            <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\f791dbeefc2b9897b3f9e2bbc1b64fd6.jpg" alt="Client Management" class="w-full h-64 mb-4 transition-transform duration-300 transform hover:scale-110">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Client Management</h3>
+            <p class="text-gray-600">Store client details, contact info, and payment history in one place.</p>
+          </a>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="text-center py-12 bg-white">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">Ready to simplify your invoicing?</h2>
+    <a href="file:///C:/Users/LENOVO/Desktop/Invoices%20and%20quotation/html/signup.html" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition">
+      Sign Up Free
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 text-center text-gray-500 py-6 text-sm">
+    &copy; 2025 InvoicePro. All rights reserved.
+  </footer>
+
+</body>
+</html>

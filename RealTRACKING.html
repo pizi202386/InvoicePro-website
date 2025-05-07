@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice Status Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Basic styles for the page */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f7fafc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+
+    /* Status circle container */
+    .status-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+
+    /* Individual status circle */
+    .status-circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: #d1d5db;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: all 0.4s ease-in-out;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Status colors */
+    .completed {
+      background-color: #38a169; /* Green */
+    }
+
+    .pending {
+      background-color: #f6ad55; /* Orange */
+    }
+
+    .waiting {
+      background-color: #63b3ed; /* Blue */
+    }
+
+    .overdue {
+      background-color: #e53e3e; /* Red */
+    }
+
+    /* Button styles */
+    .button {
+      background-color: #3182ce;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .button:hover {
+      background-color: #2b6cb0;
+      transform: scale(1.05);
+    }
+
+    .button:active {
+      transform: scale(1);
+    }
+
+    .button:focus {
+      outline: none;
+    }
+
+    /* Animation for status circle */
+    .status-circle.animate {
+      transform: scale(1.2);
+      animation: pulse 0.8s infinite alternate;
+    }
+
+    /* Pulse effect for animation */
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.2);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Invoice Status Tracker</h1>
+
+    <!-- Status Circles -->
+    <div class="status-container">
+      <div class="status-circle" id="status1">1</div>
+      <div class="status-circle" id="status2">2</div>
+      <div class="status-circle" id="status3">3</div>
+      <div class="status-circle" id="status4">4</div>
+    </div>
+
+    <!-- Update Invoice Button -->
+    <button id="trackInvoiceBtn" class="button">Update Invoice Status</button>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const trackInvoiceBtn = document.getElementById('trackInvoiceBtn');
+    const statusElements = document.querySelectorAll('.status-circle'); // Get all status circles
+    const currentStatuses = ['completed', 'pending', 'waiting', 'overdue']; // Define the possible statuses
+
+    let currentStatusIndex = 0; // Start from the first status
+
+    trackInvoiceBtn.addEventListener('click', function() {
+      statusElements.forEach((element, index) => {
+        if (index <= currentStatusIndex) {
+          // Add the current status class to the element
+          element.classList.remove('completed', 'pending', 'waiting', 'overdue');
+          element.classList.add(currentStatuses[currentStatusIndex]);
+          
+          // Apply animation to show the transition
+          element.classList.add('animate');
+
+          // Move to the next status
+          currentStatusIndex++;
+        }
+      });
+
+      // If all statuses are updated, reset and show success message
+      if (currentStatusIndex === statusElements.length) {
+        alert('Invoice Status Updated! All statuses are now tracked.');
+        currentStatusIndex = 0; // Reset the status to allow another update
+      }
+    });
+  </script>
+</body>
+</html>

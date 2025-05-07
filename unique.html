@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Quote to Invoice - InvoicePro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <!-- Main Container -->
+  <div class="max-w-4xl mx-auto my-10 p-6 bg-white shadow-2xl rounded-xl">
+
+    <!-- Header Section -->
+    <header class="mb-6 text-center">
+      <h1 class="text-3xl font-bold text-blue-600">InvoicePro</h1>
+      <p class="text-sm text-gray-500">Smart Quote to Invoice Generator</p>
+    </header>
+
+    <!-- Quote Form Section -->
+    <form id="quoteForm" class="space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+        <input type="text" placeholder="Client Name" id="clientName" class="border p-2 rounded" required />
+        <input type="email" placeholder="Client Email" id="clientEmail" class="border p-2 rounded" required />
+        <input type="text" placeholder="Item Description" id="item" class="border p-2 rounded" required />
+        <input type="number" placeholder="Quantity" id="qty" class="border p-2 rounded" required />
+        <input type="number" placeholder="Rate" id="rate" class="border p-2 rounded" required />
+        <input type="date" id="dueDate" class="border p-2 rounded" required />
+      </div>
+      <button type="button" onclick="generateQuote()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Generate Quote</button>
+    </form>
+
+    <!-- Invoice Section -->
+    <div id="invoiceSection" class="hidden mt-10 border-t pt-6">
+      <h2 class="text-2xl font-semibold text-green-600 mb-2">Invoice</h2>
+      <p><strong>Client:</strong> <span id="invClient"></span> (<span id="invEmail"></span>)</p>
+      <p><strong>Due Date:</strong> <span id="invDue"></span></p>
+      <table class="w-full mt-4 text-left border">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="p-2 border">Item</th>
+            <th class="p-2 border">Qty</th>
+            <th class="p-2 border">Rate</th>
+            <th class="p-2 border">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="p-2 border" id="invItem"></td>
+            <td class="p-2 border" id="invQty"></td>
+            <td class="p-2 border" id="invRate"></td>
+            <td class="p-2 border font-bold text-blue-700" id="invTotal"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mt-4 space-y-2">
+        <button onclick="checkReminder()" class="text-sm text-red-500 underline">Check Payment Reminder</button><br>
+        <button onclick="window.print()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Print Invoice</button>
+        <!-- Payment Button (Fixed) -->
+        <button id="paymentBtn" onclick="processPayment()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition">Process Payment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript to Handle the Form & Logic -->
+  <script>
+    // Generate Quote from Form Input
+    function generateQuote() {
+      const clientName = document.getElementById('clientName').value;
+      const clientEmail = document.getElementById('clientEmail').value;
+      const item = document.getElementById('item').value;
+      const qty = parseInt(document.getElementById('qty').value);
+      const rate = parseFloat(document.getElementById('rate').value);
+      const dueDate = document.getElementById('dueDate').value;
+
+      const total = qty * rate;
+
+      // Fill Invoice Section
+      document.getElementById('invClient').textContent = clientName;
+      document.getElementById('invEmail').textContent = clientEmail;
+      document.getElementById('invItem').textContent = item;
+      document.getElementById('invQty').textContent = qty;
+      document.getElementById('invRate').textContent = rate.toFixed(2);
+      document.getElementById('invTotal').textContent = '$' + total.toFixed(2);
+      document.getElementById('invDue').textContent = dueDate;
+
+      // Save due date for reminder check
+      localStorage.setItem('dueDate', dueDate);
+
+      // Show Invoice Section
+      document.getElementById('invoiceSection').classList.remove('hidden');
+    }
+
+    // Check if the due date has passed and show a reminder
+    function checkReminder() {
+      const dueDate = new Date(localStorage.getItem('dueDate'));
+      const today = new Date();
+
+      if (today > dueDate) {
+        alert("⚠️ Payment is OVERDUE! Please remind the client.");
+      } else {
+        alert("✅ Payment is still within the due date.");
+      }
+    }
+
+    // Simulate Payment Processing (Fixed Working)
+    function processPayment() {
+      const btn = document.getElementById('paymentBtn');
+      btn.disabled = true;
+      btn.innerText = "Processing Payment...";
+      btn.classList.add('bg-gray-400');
+      btn.classList.remove('bg-purple-600');
+
+      setTimeout(() => {
+        btn.innerText = "Payment Successful ✅";
+        btn.classList.remove('bg-gray-400');
+        btn.classList.add('bg-green-500');
+      }, 2000); // simulate payment after 2 seconds
+    }
+  </script>
+
+</body>
+</html>

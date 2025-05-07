@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InvoicePro – Create Invoice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md p-6 flex justify-between items-center">
+    <h1 class="text-3xl font-bold text-blue-600">Create Invoice</h1>
+    <div class="space-x-2">
+      <select id="currency" onchange="calculateTotal()" class="border rounded p-2">
+        <option value="PKR">₨ PKR</option>
+        <option value="USD" selected>$ USD</option>
+        <option value="EUR">€ EUR</option>
+        <option value="GBP">£ GBP</option>
+      </select>
+      <button onclick="saveAsPDF()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Save as PDF</button>
+      <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Print</button>
+    </div>
+  </header>
+
+  <!-- Invoice Form -->
+  <main id="invoice" class="max-w-5xl mx-auto mt-8 bg-white p-8 rounded shadow">
+    <!-- Invoice Info -->
+    <div class="flex justify-between mb-4">
+      <div>
+        <label class="text-sm font-semibold">Invoice #</label>
+        <input type="text" class="w-40 p-2 border rounded mt-1" placeholder="INV-001">
+      </div>
+      <div>
+        <label class="text-sm font-semibold">Date</label>
+        <input type="date" class="w-40 p-2 border rounded mt-1">
+      </div>
+    </div>
+
+    <!-- Client Info -->
+    <div class="mb-6">
+      <label class="text-sm font-semibold">Bill To</label>
+      <textarea class="w-full p-2 border rounded mt-1" placeholder="Client Name, Address, Email" rows="3"></textarea>
+    </div>
+
+    <!-- Items -->
+    <div class="overflow-x-auto mb-6">
+      <table class="min-w-full border text-sm" id="items-table">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="border px-4 py-2">Item</th>
+            <th class="border px-4 py-2">Description</th>
+            <th class="border px-4 py-2">Qty</th>
+            <th class="border px-4 py-2">Rate</th>
+            <th class="border px-4 py-2">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border px-4 py-2"><input type="text" class="w-full p-1"></td>
+            <td class="border px-4 py-2"><input type="text" class="w-full p-1"></td>
+            <td class="border px-4 py-2"><input type="number" class="w-full p-1 qty" oninput="calculateRow(this)"></td>
+            <td class="border px-4 py-2"><input type="number" class="w-full p-1 rate" oninput="calculateRow(this)"></td>
+            <td class="border px-4 py-2 text-right amount">0.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Summary -->
+    <div class="flex justify-end mb-4">
+      <div class="w-full md:w-1/3 space-y-2">
+        <div class="flex justify-between">
+          <span>Subtotal:</span>
+          <span id="subtotal">0.00</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Tax (%)</span>
+          <input type="number" class="w-20 p-1 border rounded text-right" id="tax" value="0" oninput="calculateTotal()">
+        </div>
+        <div class="flex justify-between">
+          <span>Discount</span>
+          <input type="number" class="w-20 p-1 border rounded text-right" id="discount" value="0" oninput="calculateTotal()">
+        </div>
+        <div class="flex justify-between font-bold border-t pt-2">
+          <span>Total:</span>
+          <span id="total">0.00</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-sm text-gray-500 mt-6">Thank you for doing business with us!</p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-sm text-gray-500">
+    &copy; 2025 InvoicePro. All rights reserved.
+  </footer>
+
+  <!-- Script -->
+  <script>
+    const currencySymbols = {
+      PKR: '₨',
+      USD: '$',
+      EUR: '€',
+      GBP: '£'
+    };
+
+    function getCurrencySymbol() {
+      const selected = document.getElementById("currency").value;
+      return currencySymbols[selected] || '$';
+    }
+
+    function calculateRow(input) {
+      const row = input.closest('tr');
+      const qty = row.querySelector('.qty').value;
+      const rate = row.querySelector('.rate').value;
+      const amountCell = row.querySelector('.amount');
+
+      const amount = (parseFloat(qty) || 0) * (parseFloat(rate) || 0);
+      amountCell.textContent = `${getCurrencySymbol()}${amount.toFixed(2)}`;
+
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      const symbol = getCurrencySymbol();
+      let subtotal = 0;
+      document.querySelectorAll('.amount').forEach(cell => {
+        subtotal += parseFloat(cell.textContent.replace(/[^0-9.-]+/g, '')) || 0;
+      });
+
+      document.getElementById('subtotal').textContent = `${symbol}${subtotal.toFixed(2)}`;
+
+      const tax = parseFloat(document.getElementById('tax').value) || 0;
+      const discount = parseFloat(document.getElementById('discount').value) || 0;
+      const total = subtotal + (subtotal * (tax / 100)) - discount;
+
+      document.getElementById('total').textContent = `${symbol}${total.toFixed(2)}`;
+    }
+
+    function saveAsPDF() {
+      const invoice = document.getElementById("invoice");
+      const opt = {
+        margin: 0.5,
+        filename: 'InvoicePro.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      html2pdf().from(invoice).set(opt).save();
+    }
+  </script>
+</body>
+</html>

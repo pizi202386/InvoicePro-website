@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvoicePro - FAQ</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .faq-section {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+        }
+
+        .faq-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .faq-content {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .faq-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-button:hover {
+            background-color: #2980b9;
+        }
+
+        .faq-button svg {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-button[aria-expanded="true"] svg {
+            transform: rotate(180deg);
+        }
+
+        /* Top navigation bar styling */
+        .navbar {
+            background-image: url("file:///C:/Users/LENOVO/Desktop/Invoices%20and%20quotation/images/NEW.jpg"); /* Add background image */
+            background-size: cover; /* Ensures the image covers the entire navbar */
+            background-position: center; /* Centers the image */
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar img {
+            height: 60px; /* Adjust based on your logo size */
+            width: auto;
+        }
+
+        .navbar .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .navbar .menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .menu a:hover {
+            color: #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="flex items-center">
+            <!-- Logo -->
+            <img src="C:\Users\LENOVO\Desktop\Invoices and quotation\images\logo.png" alt="InvoicePro Logo"> <!-- Add your logo here -->
+            <!-- Website Name -->
+            <span class="logo-text ml-2">InvoicePro</span>
+        </div>
+
+        <div class="menu">
+            <a href="C:\Users\LENOVO\Desktop\Invoices and quotation\html\eight.html">Home</a>
+            <a href="C:\Users\LENOVO\Desktop\Invoices and quotation\html\feature2.html">Features</a>
+            <a href="C:\Users\LENOVO\Desktop\Invoices and quotation\html\FastCREATEINVOICES2.html">Create Invoice</a>
+            <a href="C:\Users\LENOVO\Desktop\Invoices and quotation\html\CreateQuotation.html">Create Quotation</a>
+            <a href="C:\Users\LENOVO\Desktop\Invoices and quotation\html\FAQ.html">FAQ</a>
+        </div>
+    </nav>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Frequently Asked Questions</h2>
+        
+        <!-- FAQ 1 -->
+        <div class="faq-item" x-data="{ open: false }">
+            <button class="faq-button" :aria-expanded="open.toString()" @click="open = !open">
+                <span class="faq-title">What is InvoicePro?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div x-show="open" class="faq-content" x-collapse>
+                InvoicePro is a modern and easy-to-use invoicing tool that helps businesses generate professional invoices quickly and efficiently. It allows for easy customization and supports multiple currencies.
+            </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item" x-data="{ open: false }">
+            <button class="faq-button" :aria-expanded="open.toString()" @click="open = !open">
+                <span class="faq-title">How can I customize my invoice?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div x-show="open" class="faq-content" x-collapse>
+                You can customize the invoice by adding your company logo, changing the currency, adjusting tax rates, and including additional notes. All fields are editable.
+            </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item" x-data="{ open: false }">
+            <button class="faq-button" :aria-expanded="open.toString()" @click="open = !open">
+                <span class="faq-title">Can I add taxes to my invoices?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div x-show="open" class="faq-content" x-collapse>
+                Yes, you can add tax fields manually by specifying the tax rate in the settings. You can also adjust the amount depending on the required tax percentage.
+            </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item" x-data="{ open: false }">
+            <button class="faq-button" :aria-expanded="open.toString()" @click="open = !open">
+                <span class="faq-title">Can I use InvoicePro for multiple currencies?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div x-show="open" class="faq-content" x-collapse>
+                Yes, InvoicePro supports multiple currencies, allowing you to easily switch between different currencies for your invoices.
+            </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item" x-data="{ open: false }">
+            <button class="faq-button" :aria-expanded="open.toString()" @click="open = !open">
+                <span class="faq-title">Is InvoicePro suitable for small businesses?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div x-show="open" class="faq-content" x-collapse>
+                Yes, InvoicePro is designed to be user-friendly and efficient for small businesses. It helps automate invoicing, saves time, and keeps your finances organized.
+            </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-item" x-data="{ open: false }">
+            <button class="faq-button" :aria-expanded="open.toString()" @click="open = !open">
+                <span class="faq-title">Can I email invoices directly from InvoicePro?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div x-show="open" class="faq-content" x-collapse>
+                Yes, you can email invoices directly from InvoicePro once the invoice is created. Just click the email button to send it to your client.
+            </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-item" x-data="{ open: false }">
+            <button class="faq-button" :aria-expanded="open.toString()" @click="open = !open">
+                <span class="faq-title">Is my data secure on InvoicePro?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div x-show="open" class="faq-content" x-collapse>
+                Yes, InvoicePro uses encryption to ensure your data is secure. Your financial and client information is stored safely.
+            </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-item" x-data="{ open: false }">
+            <button class="faq-button" :aria-expanded="open.toString()" @click="open = !open">
+                <span class="faq-title">How can I track payments for my invoices?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div x-show="open" class="faq-content" x-collapse>
+                InvoicePro allows you to mark invoices as paid or overdue. You can easily track the status of each payment directly in the system.
+            </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-item" x-data="{ open: false }">
+            <button class="faq-button" :aria-expanded="open.toString()" @click="open = !open">
+                <span class="faq-title">Can I integrate InvoicePro with my accounting software?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div x-show="open" class="faq-content" x-collapse>
+                Currently, we do not have direct integration with accounting software. However, you can export your invoices in CSV or PDF format for easy import into your accounting tool.
+            </div>
+        </div>
+
+        <!-- FAQ 10 -->
+        <div class="faq-item" x-data="{ open: false }">
+            <button class="faq-button" :aria-expanded="open.toString()" @click="open = !open">
+                <span class="faq-title">Can I print my invoices?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div x-show="open" class="faq-content" x-collapse>
+                Yes, you can print your invoices directly from InvoicePro. Simply click the print button after creating an invoice.
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
