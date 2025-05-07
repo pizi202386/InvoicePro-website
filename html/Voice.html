@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unique Invoice</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .dark {
+      background: #222;
+      color: #eee;
+    }
+    .invoice {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .dark .invoice {
+      background: #333;
+      color: #fff;
+    }
+    h1, h2 {
+      margin: 0;
+    }
+    .editable {
+      border-bottom: 1px dashed gray;
+      cursor: pointer;
+      display: inline-block;
+      min-width: 50px;
+    }
+    .theme-btn {
+      margin: 10px 0;
+      padding: 5px 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background: #007bff;
+      color: white;
+    }
+    .dark .theme-btn {
+      background: #ff5722;
+    }
+    .btn {
+      margin: 10px 0;
+      padding: 7px 15px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background: green;
+      color: white;
+    }
+@media print {
+  .btn, .theme-btn {
+    display: none;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <button class="theme-btn" onclick="toggleTheme()">Toggle Theme</button>
+
+  <div class="invoice" id="invoice">
+    <h1 contenteditable="true" class="editable">InvoicePro #001</h1>
+    <p><strong>Bill To:</strong> <span contenteditable="true" class="editable">John Doe</span></p>
+    <p><strong>Date:</strong> <span contenteditable="true" class="editable">2025-05-06</span></p>
+
+    <table border="1" width="100%" cellpadding="8" cellspacing="0">
+      <tr>
+        <th>Description</th>
+        <th>Qty</th>
+        <th>Rate</th>
+        <th>Amount</th>
+      </tr>
+      <tr>
+        <td contenteditable="true" class="editable">Web Design</td>
+        <td><input type="number" value="1" min="1" onchange="calculateTotal()"></td>
+        <td><input type="number" value="500" onchange="calculateTotal()"></td>
+        <td class="amount">500</td>
+      </tr>
+      <tr>
+        <td contenteditable="true" class="editable">Hosting</td>
+        <td><input type="number" value="1" min="1" onchange="calculateTotal()"></td>
+        <td><input type="number" value="100" onchange="calculateTotal()"></td>
+        <td class="amount">100</td>
+      </tr>
+    </table>
+
+    <h2>Total: Rs<span id="total">600</span></h2>
+
+    <h3>Scan to Pay</h3>
+    <canvas id="qr"></canvas>
+
+    <button class="btn" onclick="downloadPDF()">Download as PDF</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+    }
+
+    function calculateTotal() {
+      const rows = document.querySelectorAll('table tr:not(:first-child)');
+      let total = 0;
+      rows.forEach(row => {
+        const qty = row.cells[1].querySelector('input').value;
+        const rate = row.cells[2].querySelector('input').value;
+        const amount = qty * rate;
+        row.cells[3].innerText = amount;
+        total += amount;
+      });
+      document.getElementById('total').innerText = total;
+      generateQR();
+    }
+
+    function generateQR() {
+      const qr = new QRious({
+        element: document.getElementById('qr'),
+        value: 'Invoice Amount: Rs' + document.getElementById('total').innerText,
+        size: 150
+      });
+    }
+
+   function downloadPDF() {
+  const downloadBtn = document.querySelector('.btn');
+  const themeBtn = document.querySelector('.theme-btn');
+
+  // Hide buttons before generating PDF
+  downloadBtn.style.display = 'none';
+  themeBtn.style.display = 'none';
+
+  const invoice = document.getElementById('invoice');
+
+  html2pdf().from(invoice).save('invoice.pdf').then(() => {
+    // Show buttons again after PDF download
+    downloadBtn.style.display = 'inline-block';
+    themeBtn.style.display = 'inline-block';
+  });
+}
+
+
+    window.onload = function() {
+      calculateTotal();
+      generateQR();
+    }
+  </script>
+
+</body>
+</html>
